@@ -15,21 +15,37 @@ makeVector <- function(x = numeric()) {
        getmean = getmean)
 }
 
-# Matrix inverse
+## Define a sq matrix (2 x 2)
+x <- matrix(rnorm(4), nrow = 2) 
+
+# Inverse of matrix 
+## This function allows to inverse any matrix
 makeCacheMatrix <- function(x = matrix()) {
   m<-NULL
+  
+## Setter the matrix
   set<-function(y){
     x<<-y
     m<<-NULL
   }
-  get<-function() x
+
+##  Call the new matrix function
+get<-function() x
   setmatrix<-function(solve) m<<- solve
   getmatrix<-function() m
-  list(set=set, get=get,
+  
+## Return the matrix with new functions
+list(set=set, get=get,
        setmatrix=setmatrix,
        getmatrix=getmatrix)
 }
 
+## Print and solve de matriz given as example
+print(x)
+solve(x)
+
+# This is the second part of assigment
+## Function given by Cousera team
 cacheSolve <- function(x=matrix(), ...) {
   m<-x$getmatrix()
   if(!is.null(m)){
@@ -42,6 +58,8 @@ cacheSolve <- function(x=matrix(), ...) {
   m
 }
 
+## Compute the inverse of the matrix. If the inverse is already 
+## calculated before, it returns the cached inverse
 cachemean <- function(x, ...) {
   m <- x$getmean()
   if(!is.null(m)) {
@@ -54,14 +72,20 @@ cachemean <- function(x, ...) {
   m
 }
 
+## To solve the cache
+## If the inversed matriz is returned 
 cacheSolve <- function(x, ...) {
   s <- x$getsolve()
   if(!is.null(s)) {
     message("getting cached data")
     return(s)
   }
+
+## If the inverse is not calculated
   data <- x$get()
-  s <- solve(data, ...)
-  x$setsolve(s)
+  
+## Invertion
+s <- solve(data, ...)
+x$setsolve(s)
   s
 }
